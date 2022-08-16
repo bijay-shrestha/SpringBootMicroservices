@@ -18,5 +18,6 @@
         <module>eureka-registry</module>
         <module>order-service</module>
         <module>payment-service</module>
+        <module>api-gateway</module>
     </modules>
 </project>
