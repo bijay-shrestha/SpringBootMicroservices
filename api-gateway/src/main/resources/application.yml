@@ -14,11 +14,27 @@ spring:
           uri: lb://PAYMENT-SERVICE
           predicates:
             - Path=/payments/**
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:9090/eureka
-  instance:
-    hostname: localhost
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+microservice:
+  payment-service:
+    endpoints:
+      endpoint:
+        uri: http://PAYMENT-SERVICE/payments/doPayment
+  order-service:
+    endpoints:
+      endpoint:
+        uri: http://ORDER-SERVICE/orders/placeOrder
